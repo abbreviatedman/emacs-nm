@@ -95,9 +95,10 @@ This will create a NetworkManager profile with the SSID as the profile NAME."
    (list (completing-read "Network: " (nm/cmd "-t -f SSID device wifi" t))
          (read-string "Password: ")))
   (let* ((fstr (format "device wifi connect %s password %s" network password))
-         (output (nm/cmd fstr)))
+         (output (nm/cmd fstr))
+         (vpn-profiles-p (nm/find-profiles-by-type "vpn")))
     (message output)
-    (when (nm/find-profiles-by-type "vpn")
+    (when vpn-profiles-p
       (when (yes-or-no-p "Connect a VPN profile?")
         (nm/connect-vpn-profile)))))
 
