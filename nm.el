@@ -96,11 +96,13 @@ This will create a NetworkManager profile with the SSID as the profile NAME."
          (password-read "Password: ")))
   (let* ((fstr (format "device wifi connect %s password %s" network password))
          (output (nm/cmd fstr))
-         (vpn-profiles-p (nm/find-profiles-by-type "vpn")))
+         (vpn-profiles-exist-p (nm/find-profiles-by-type "vpn")))
     (message output)
-    (when vpn-profiles-p
-      (when (yes-or-no-p "Connect a VPN profile?")
-        (nm/connect-vpn-profile)))))
+    (when
+        (and
+         vpn-profiles-exist-p
+         (yes-or-no-p "Connect a VPN profile?"))
+      (nm/connect-vpn-profile))))
 
 (defun nm/connect-with-profile ()
   "Activate connection using existing profile configuration."
