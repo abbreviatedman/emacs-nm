@@ -1,5 +1,7 @@
 (provide 'nm)
 
+(require 'subr-x)
+
 (defvar iface nil
   "Primary WiFi network interface.")
 
@@ -119,3 +121,23 @@ This will create a NetworkManager profile with the SSID as the profile NAME."
   (if (nm/wifi-enabled-p)
       (nm/cmd "radio wifi off")
     (nm/cmd "radio wifi on")))
+
+(defun crj/test-msg ()
+  (interactive)
+  (message "hi\nhi\nhi\nhi\nhi\nhi\nhi\nhi\nhi\nhi\nhi\nhi\nhi\nhi\nhihi\nhi")
+  (let ((message-log-max nil))
+    (princ "hello\nhello\nhello...\n\nFull list in *Messages*")))
+
+(setq test-str1 "line 1\nline 2\nline 3\nline 4\nline 5\n")
+(setq test-str2 "line 1\nline 2\nline 3\nline 4\nline 5\nline 6\nline 7")
+(setq test-str3 "line 1\nline 2\nline 3")
+(setq test-str4 "line 1\nline 2")
+(message (crj/only-first-three-lines test-str1))
+(message (crj/only-first-three-lines test-str2))
+(message (crj/only-first-three-lines test-str3))
+(message (crj/only-first-three-lines test-str4))
+
+(defun crj/only-first-three-lines (str)
+  (interactive)
+  (let ((lines (split-string str "\n")))
+    (string-join (butlast lines (- (length lines) 3)) "\n")))
