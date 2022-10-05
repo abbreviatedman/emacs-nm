@@ -1,5 +1,9 @@
 #+TITLE: emacs-nm
 
+* Emacs Network Manager
+
+Uses nmcli to connect to networks from within Emacs.
+
 * Progress [57%]                                                   :PROGRESS:
   - [X] Set WiFi interface
     - [X] List WiFi Interfaces
